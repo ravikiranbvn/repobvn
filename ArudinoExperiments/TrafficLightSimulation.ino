@@ -1,5 +1,11 @@
 // Implemenation of traffic light simulation using finite statemachine logic without delay()
 // Bulusu, Ravikiran
+// Hardware connections on Arudino Nano
+// D12 to 330ohms to yellow led, D11 to 330ohms t0 red led, D10 to 330 ohms to green led, D5 to SPST and common ground
+// Output
+// Press button to start simulation, yellow led blinks for 3 times
+// then switch on the red led, followed by transition state from 
+// green led (after yellow led blinks for 3 times), finally turn off.
 
 // button
 int pin_button = 5;
@@ -30,7 +36,6 @@ unsigned long off_delay_yellowLed = 300;
 int beep_count_yellowLed = 0;
 int beep_number_yellowLed = 3;
 
-
 // traffic light
 int state_current_trafficLight = 0;
 
@@ -49,7 +54,6 @@ void loop() {
 }
 
 void StateMachine_trafficLightSimulation(){
-
   // switch case to handle traffic light simulation
   switch(state_current_trafficLight){
     case 0: // RESET
@@ -70,7 +74,7 @@ void StateMachine_trafficLightSimulation(){
       }
     break;
 
-    case 2: // Turn on Red
+    case 2: // Turn on Red led
         if(state_yellowLed == 0)
         {
           state_redLed = 2;
@@ -86,7 +90,7 @@ void StateMachine_trafficLightSimulation(){
         }
     break;
         
-    case 4:  // Turn on Green
+    case 4:  // Turn on Green led
         if(state_yellowLed == 0)
         {
           state_greenLed = 2;
