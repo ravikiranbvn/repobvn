@@ -18,7 +18,7 @@ void insertToMap(std::map<vector<string>,vector<int>>& years, std::pair <vector<
     years.insert(pair);
 }
 
-void findInMap(std::map<vector<string>,vector<int>>& years, vector<string>& vec)
+bool findInMap(std::map<vector<string>,vector<int>> years, vector<string> vec)
 {
     cout << "***********findInMap*****************" << endl;
 
@@ -28,9 +28,14 @@ void findInMap(std::map<vector<string>,vector<int>>& years, vector<string>& vec)
     {
         vector<int> k;
         k = (it->second);
-        for(auto &i: k)
+        for(const auto &i: k)
+        {
             cout << "value" << std::distance(begin(years), it) << ":" << "      "<< i << endl;
+            return true;
+        }
     }
+
+    return false;
 }
 
 void displayMap(std::map<vector<string>,vector<int>>& years)
@@ -44,12 +49,12 @@ void displayMap(std::map<vector<string>,vector<int>>& years)
         it = years.find(vec);
         if(it != years.end())
         {
-            for(auto &o: vec)
+            for(const auto &o: vec)
                 cout << "key" << std::distance(begin(years), it) << ":" << "      "<< o << endl;
 
             vector<int> k;
             k = (it->second);
-            for(auto &i: k)
+            for(const auto &i: k)
                 cout << "value" << std::distance(begin(years), it) << ":" << "      "<< i << endl;
         }
     }
@@ -65,7 +70,8 @@ int main()
 
     // find
     vector<string> key = {"Martin", "Ritchards"};
-    findInMap(years, key);
+    if(findInMap(years, key))
+        cout << "found key->value" << endl;
 
     // insert
     std::pair <vector<string>,vector<int>> insertPair ({"Bjarne","Stroustrup"},{1950, 1975, 1985});
@@ -83,9 +89,3 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
