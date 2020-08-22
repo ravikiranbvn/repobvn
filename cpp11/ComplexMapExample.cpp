@@ -18,7 +18,7 @@ void insertToMap(std::map<vector<string>,vector<int>>& years, std::pair <vector<
     years.insert(pair);
 }
 
-bool findInMap(std::map<vector<string>,vector<int>> years, vector<string> vec)
+bool findInMap(std::map<vector<string>,vector<int>>& years, vector<string>& vec)
 {
     cout << "***********findInMap*****************" << endl;
 
@@ -29,10 +29,8 @@ bool findInMap(std::map<vector<string>,vector<int>> years, vector<string> vec)
         vector<int> k;
         k = (it->second);
         for(const auto &i: k)
-        {
             cout << "value" << std::distance(begin(years), it) << ":" << "      "<< i << endl;
-            return true;
-        }
+        return true;
     }
 
     return false;
