@@ -45,6 +45,13 @@ add_executable( templateEx
 
 add_executable( lamdaEx
                 lamdaEx.cpp)
+
+add_executable( bitWiseOp
+                bitWiseOp.cpp)
+
+add_executable( evenOdd
+                evenOdd.cpp)
+
 # how to link to a library (OpenCV as example)
 # target_link_libraries( cpp-callback ${OpenCV_LIBS} )
 target_link_libraries(packageEx PRIVATE fmt::fmt-header-only) 
