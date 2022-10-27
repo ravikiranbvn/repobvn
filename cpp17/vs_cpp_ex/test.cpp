@@ -191,11 +191,33 @@
 //     return 0;                                        
 // }
 
-// ---------------dummy-------------
+#include <array>
 #include <iostream>
-using namespace std;
 
-int main()
-{
-    std::cout << "dummy()" << "\n";
+constexpr std::array<int, 3> signal = []() constexpr {
+    std::array<int, 3> arr = {0};
+    for(int i=0; i < 3; i++) {
+        arr.at(i) = (2 * i) * (2 * i);
+    }
+
+    return arr;
+}();
+
+int main() {
+
+    for(auto const&elem: signal) {
+        std::cout << elem << std::endl;
+    };
+
+    return 0;
 }
+
+
+// ---------------dummy-------------
+// #include <iostream>
+// using namespace std;
+
+// int main()
+// {
+//     std::cout << "dummy()" << "\n";
+// }

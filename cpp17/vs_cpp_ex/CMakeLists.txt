@@ -52,6 +52,12 @@ add_executable( bitWiseOp
 add_executable( evenOdd
                 evenOdd.cpp)
 
+add_executable( cToCppEx
+                cToCppEx.cpp )
+
+add_executable ( strongTypeEx
+                 strongTypeEx.cpp )
+
 # how to link to a library (OpenCV as example)
 # target_link_libraries( cpp-callback ${OpenCV_LIBS} )
 target_link_libraries(packageEx PRIVATE fmt::fmt-header-only) 
