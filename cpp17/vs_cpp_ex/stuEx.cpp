@@ -1,4 +1,5 @@
 // https://www.codementor.io/@sandesh87/the-rule-of-five-in-c-1pdgpzb04f
+// https://shaharmike.com/cpp/move-semantics/
 
 #include <iostream>
 #include <cstring>
