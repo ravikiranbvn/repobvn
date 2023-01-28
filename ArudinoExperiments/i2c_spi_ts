@@ -1,0 +1,18 @@
+a. steps to board bring up i2c devices on yocto/linux SoC:
+1. Device tree settings 
+2. Hardware connections/measurements with oscillscope to check all the signals
+3. i2c tools linux (to access the slaves)
+   - https://linuxhint.com/i2c-linux-utilities/
+
+b. steps to board bring up spi devices on yocto/linux SoC:
+1. Device tree settings 
+2. Hardware connections/measurements with oscillscope to check all the signals
+3. Spi dev test (to acesses the slaves)
+   https://github.com/rm-hull/spidev-test/blob/master/spidev_test.c
+    
+  Ad9528 ts: (check for 3-wire/4-wire spi)
+  - always check data sheet for steps to get the magic number of the IC
+  spidev-test -D /dev/spidev1.0 -p "\x00\x00\x18" -v (write)
+  spidev-test -D /dev/spidev1.0 -p "\x00\x0F\x01" -v (write)
+  spidev-test -D /dev/spidev1.0 -p "\x80\x0C\x00\x00" -v (read)
+  spidev-test -D /dev/spidev1.0 -p "\x80\x0D\x00\x00" -v (read)
