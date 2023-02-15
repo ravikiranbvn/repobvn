@@ -1,3 +1,5 @@
+// Program to create a atomic counter and control the thread execution with a condition on counter
+
 #include <thread>
 #include <iostream>
 #include <mutex>
