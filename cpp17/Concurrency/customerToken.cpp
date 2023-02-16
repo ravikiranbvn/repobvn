@@ -32,39 +32,39 @@ static int myrand(int min, int max) {
 
 static std::pair<int, bool> get_tableStatus(std::unordered_map<int, bool>& TableMap)
 {
+   std::pair<int, bool> foundP{0, false};
    for(auto& eachTable: TableMap)
    {
       if(eachTable.second == false)
-        return eachTable;
+      {
+        eachTable.second = true;
+        foundP = make_pair(eachTable.first, eachTable.second);
+        break;
+      }
    }
-   return {0, false};
+   
+   return foundP;
 }
 
-void set_tableStatus(std::unordered_map<int, bool>& TableMap, std::pair<int, int> updateStatus)
+void set_tableStatus(std::unordered_map<int, bool>& TableMap, std::pair<int, bool> updateStatus)
 {
    for(auto& eachTable: TableMap)
    {
-       if(eachTable.first  == updateStatus.second)
-       {
-           if(updateStatus.first == FINISHED)
-              eachTable.second = false;
-           
-           if(updateStatus.first == EATING)
-              eachTable.second = true;
-       }
+       if(eachTable.first  == updateStatus.first)
+          eachTable.second = updateStatus.second;
    }
 }
 
 class Customer {
 public:
-    Customer(std::string n, std::unordered_map<int, bool> TableMap) :
+    Customer(std::string n, std::unordered_map<int, bool>& TableMap) :
             m_name(std::move(n)),
-            m_cust(&Customer::run, this),
             m_tableMap(TableMap),
             m_state(UNKNOWN),
-            m_tableTaken(-1) {}
+            m_tableTaken(-1),
+            m_cust(&Customer::run, this) {}
     
-~Customer() { m_cust.join(); }
+~Customer() { m_tableTaken=-1; m_state = UNKNOWN; m_cust.join();  }
 
 void test()        
 {
@@ -72,65 +72,67 @@ void test()
   std::pair<int, bool> availTable = get_tableStatus(m_tableMap);
   if(availTable.first > 0 && availTable.first <= MAX_TABLES)
   {
-    if(m_state == HUNGRY && availTable.second == false)
+    if(m_state == HUNGRY && availTable.second == true)
     {
         m_state = EATING;
         m_tableTaken = availTable.first;
-        std::pair<int, bool> upPair = {m_state, m_tableTaken};
-        set_tableStatus(m_tableMap, upPair);
+        std::cout << "name = " << m_name << " table =" << m_tableTaken << "\n";
     } 
   }
 }
 
 void get_table()    
 {
-  mutex_.lock();              // enter critical region
-  m_state = HUNGRY;
-  test();                     // try to acquire table
-  mutex_.unlock();            // exit critical region
+  std::unique_lock lk(mutex_);     // enter critical region
+  if(m_state == WAITING) {
+      m_state = HUNGRY;
+      test();                      // try to acquire table
+    }
 }
 
 void leave_table()   
 {
-  mutex_.lock();                 // enter critical region
-  m_state = FINISHED;            // customer has finished eating
-  std::pair<int, bool> upPair = {m_state, m_tableTaken};
-  set_tableStatus(m_tableMap, upPair);
-  std::cout<<"\t\t\t\t\t\t\t\t"<<m_name<<" finished "<<"\n";
-  mutex_.unlock();               // exit critical region
+  std::unique_lock lk(mutex_);   // enter critical region
+  if(m_state == FINISHED) {      // customer has finished eating
+    std::pair<int, bool> upPair = {m_tableTaken, false};
+    set_tableStatus(m_tableMap, upPair);
+    std::cout<<"\t\t\t\t\t\t\t\t"<<m_name<<" finished "<<"\n";
+  }
 }
 
 void wait() {
-  m_state = WAITING;
-  int duration = myrand(1000, 2000);
-  {
-	std::lock_guard<std::mutex> g(mo);
-	std::cout<<m_name<<" waiting "<<duration<<"ms\n";
+  if(m_state = UNKNOWN) {
+    m_state = WAITING;
+    int duration = myrand(1000, 2000);
+    {
+        std::lock_guard<std::mutex> g(mo);
+        std::cout<<m_name<<" waiting "<<duration<<"ms\n";
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(duration));
   }
-  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 }
 
 void eat() {
   if(m_state == EATING) {
-  int duration = myrand(1000, 2000);
-  {
-	std::lock_guard<std::mutex> g(mo);
-	std::cout<<"\t\t\t\t"<<m_name<<" eating "<<duration<<"ms\n";
+    int duration = myrand(1000, 2000);
+    {
+	    std::lock_guard<std::mutex> g(mo);
+	    std::cout<<"\t\t\t\t"<<m_name<<" eating "<<duration<<"ms\n";
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+    m_state = FINISHED;
   }
-  std::this_thread::sleep_for(std::chrono::milliseconds(duration));
- }
 }
-
 
 void run() {
     while (true) {           		// repeat till finised
     wait();            		        // customer is waiting
     get_table();                    // get table
-    eat();             		        // yum-yum, spaghetti
+    eat();             		        // eat
     leave_table();                  // leave table
     
     if(m_state == FINISHED)
-       break;                       // bye
+       break;
   }
   
   std::cout<<"\t\t\t\t\t\t\t\t\t\t\t\t"<<m_name<<" bye! "<<"\n";
@@ -138,10 +140,10 @@ void run() {
     
 private:
     std::string const m_name;
-    std::thread m_cust;
-    std::unordered_map<int, bool> m_tableMap;
+    std::unordered_map<int, bool>& m_tableMap;
     int m_state;
     int m_tableTaken;
+    std::thread m_cust;
 };
 
 int main() {
@@ -162,4 +164,8 @@ int main() {
   Customer cust4{"x", std::ref(TableMap)};
   Customer cust5{"y", std::ref(TableMap)};
   Customer cust6{"z", std::ref(TableMap)};
+  Customer cust7{"z1", std::ref(TableMap)};
+  Customer cust8{"z2", std::ref(TableMap)};
+  Customer cust9{"z3", std::ref(TableMap)};
+  Customer cust10{"z4", std::ref(TableMap)};
 }
