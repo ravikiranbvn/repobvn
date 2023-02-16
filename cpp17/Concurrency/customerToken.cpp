@@ -51,7 +51,10 @@ void set_tableStatus(std::unordered_map<int, bool>& TableMap, std::pair<int, boo
    for(auto& eachTable: TableMap)
    {
        if(eachTable.first  == updateStatus.first)
+       {
           eachTable.second = updateStatus.second;
+          break;
+       }
    }
 }
 
