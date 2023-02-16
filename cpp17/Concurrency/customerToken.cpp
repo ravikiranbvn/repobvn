@@ -111,13 +111,14 @@ void wait() {
 }
 
 void eat() {
-  m_state = EATING;
+  if(m_state == EATING) {
   int duration = myrand(1000, 2000);
   {
 	std::lock_guard<std::mutex> g(mo);
 	std::cout<<"\t\t\t\t"<<m_name<<" eating "<<duration<<"ms\n";
   }
   std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+ }
 }
 
 
