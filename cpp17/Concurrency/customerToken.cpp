@@ -46,7 +46,7 @@ static std::pair<int, bool> get_tableStatus(std::unordered_map<int, bool>& Table
    return foundP;
 }
 
-void set_tableStatus(std::unordered_map<int, bool>& TableMap, std::pair<int, bool> updateStatus)
+static void set_tableStatus(std::unordered_map<int, bool>& TableMap, std::pair<int, bool> updateStatus)
 {
    for(auto& eachTable: TableMap)
    {
