@@ -82,6 +82,8 @@ void test()
         std::cout << "name = " << m_name << " table =" << m_tableTaken << "\n";
     } 
   }
+  else
+    m_state = UNKNOWN; 
 }
 
 void get_table()    
@@ -104,7 +106,7 @@ void leave_table()
 }
 
 void wait() {
-  if(m_state = UNKNOWN) {
+  if(m_state == UNKNOWN) {
     m_state = WAITING;
     int duration = myrand(1000, 2000);
     {
