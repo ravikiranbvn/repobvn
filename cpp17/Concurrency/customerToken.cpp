@@ -67,7 +67,10 @@ public:
             m_tableTaken(-1),
             m_cust(&Customer::run, this) {}
     
-~Customer() { m_tableTaken=-1; m_state = UNKNOWN; m_cust.join();  }
+~Customer() 
+{ 
+  m_cust.join();  
+}
 
 void test()        
 {
@@ -88,17 +91,17 @@ void test()
 
 void get_table()    
 {
-  std::unique_lock lk(mutex_);     // enter critical region
-  if(m_state == WAITING) {
+  std::lock_guard<std::mutex> lk(mutex_);     // enter critical region
+  if(m_state == WAITING || m_state == UNKNOWN) {
       m_state = HUNGRY;
-      test();                      // try to acquire table
+      test();                     	     // try to acquire table
     }
 }
 
 void leave_table()   
 {
-  std::unique_lock lk(mutex_);   // enter critical region
-  if(m_state == FINISHED) {      // customer has finished eating
+  std::lock_guard<std::mutex> lk(mutex_);   // enter critical region
+  if(m_state == FINISHED) {      	    // customer has finished eating
     std::pair<int, bool> upPair = {m_tableTaken, false};
     set_tableStatus(m_tableMap, upPair);
     std::cout<<"\t\t\t\t\t\t\t\t"<<m_name<<" finished "<<"\n";
@@ -131,10 +134,10 @@ void eat() {
 
 void run() {
     while (true) {           		// repeat till finised
+    get_table();                        // get table
     wait();            		        // customer is waiting
-    get_table();                    // get table
     eat();             		        // eat
-    leave_table();                  // leave table
+    leave_table();                  	// leave table
     
     if(m_state == FINISHED)
        break;
@@ -173,4 +176,6 @@ int main() {
   Customer cust8{"z2", std::ref(TableMap)};
   Customer cust9{"z3", std::ref(TableMap)};
   Customer cust10{"z4", std::ref(TableMap)};
+  
+  return 0;
 }
