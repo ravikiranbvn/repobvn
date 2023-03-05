@@ -4,6 +4,7 @@
 #include <thread>
 #include <condition_variable>
 #include <functional>
+#include <atomic>
 
 using namespace std::chrono_literals;
 using namespace std;
@@ -32,10 +33,9 @@ public:
     virtual ~Task();
     
 private:
-    std::thread m_thread;
     long m_dur;
     std::function<void()> m_execute;
-    std::condition_variable m_cv;
+    std::thread m_thread;
 };
 
 Task::Task(const std::function<void()> job, long n) : 
@@ -73,10 +73,8 @@ public:
     void stop() 
     {
       std::unique_lock<std::mutex> lock(m_mutex);
-      if(m_cv.wait_for(lock, m_timeAllTasks*100ms, [&] {return m_noAllTasks == 0;}))
-        std::cerr << "finished all tasks" << "\n";
-      else
-        std::cerr << "timed out after" << m_timeAllTasks << "\n";
+      m_cv.wait(lock, [&] {return m_noAllTasks == 0;});
+      std::cout << "finished all tasks" << "\n";
     }
     
 private:
