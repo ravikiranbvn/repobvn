@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/sch.dir/sch.cpp.o -o sch 

@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/customerToken.dir/customerToken.cpp.o -o customerToken 

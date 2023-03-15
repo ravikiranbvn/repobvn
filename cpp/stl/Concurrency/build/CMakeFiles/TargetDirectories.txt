@@ -1,7 +1,0 @@
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/atomic_counterEx.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/blocked_queue_OT_error.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/Blocking_bound_q_Ex.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/customerToken.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/sch.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/edit_cache.dir
-/media/sf_sharedf_VM/repobvn/cpp17/Concurrency/build/CMakeFiles/rebuild_cache.dir
