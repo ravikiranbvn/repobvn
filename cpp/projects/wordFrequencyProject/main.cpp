@@ -2,62 +2,44 @@
 
 #include "SyncQueue.h"
 #include "WorkerThread.h"
-#include "SearchThread.h"
 #include <iostream>
 #include <stdio.h>
-#include <string>
-#include <sys/types.h>
-#include <dirent.h>
-#include <ftw.h>
-#include <fnmatch.h>
-#include <signal.h>
-#include <errno.h>
-#include <fstream>
-#include <vector>
-#include <utility>
-#include <iterator>
-#include <map>
-#include <iomanip>
+#include <bits/stdc++.h>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 using namespace std;
 
 //max 3 worker thread
 const unsigned int WThreadCount = 3;
 
-//Queue object
-SyncQueue Qobject;
-
 int main(int argc, char * argv[]){
 
+       //Queue object
+       SyncQueue Qobject;
+
 	string path;
-	bool searchStatus = false;
 	cout<<"Please specify the directory path: "<<endl;
 	cin>>path;
-
-	DIR *pDir;
-	pDir = opendir(path.c_str());
-
-	if(pDir==NULL){
-		cout << endl << "Directory doesn't exists" << endl;
-		return -1;
-	}
-
-	closedir(pDir);
-
+	
+	for(const auto& entry: fs::recursive_directory_iterator(path)) {
+           if(entry.is_regular_file()) {
+             if(entry.path().extension().string() == ".txt") {
+                Qobject.AddFileNametoQ(entry.path());
+           }
+	  }
+        }
 	cout << endl <<"Please wait while processing...." <<  endl;
-
-	//Creating Search thread to add .txt file in Queue
-	SearchThread STobject;
-	searchStatus = STobject.StartSearchTxtFiles(path);
-
+	
 	//Creating worker threads
-	WorkerThread WThread(WThreadCount);
+	WorkerThread WThread(WThreadCount, Qobject);
 	WThread.CreateThreeWorkerThread();
 
-	while(1){
-		if(searchStatus && !(Qobject.GetCount()))
-		{
-			break;
-		}
+	while(1) {
+	   if(!Qobject.GetCount())
+	   {
+	     break;
+	   }
 	}
 
 	multimap<int,string,greater<int>> MMtable;

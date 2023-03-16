@@ -1,4 +1,5 @@
 #include "SyncQueue.h"
+using namespace std;
 
 SyncQueue::SyncQueue()
 {
@@ -18,10 +19,9 @@ Return value: NA
  */
 void SyncQueue::AddFileNametoQ(string filepath)
 {
-	MutexObject.lock();
+	std::unique_lock<std::mutex> lock(MutexObject);
 	Queue.push(filepath);
 	CountFileSize++;
-	MutexObject.unlock();
 }
 
 /*
@@ -30,14 +30,14 @@ Description: This function read the filepath from synchronized queue
 Parameter: NA
 Return value : string    filepath
  */
-string SyncQueue :: GetFilefrmQ(){
+string SyncQueue::GetFilefrmQ(){
+        std::unique_lock<std::mutex> lock(MutexObject);
 	string filename="";
-	MutexObject.lock();
 	if(!Queue.empty()){
 		filename = Queue.front();
 		Queue.pop();
 	}
-	MutexObject.unlock();
+	
 	return filename;
 }
 
@@ -48,7 +48,7 @@ Description: This function returns the size of synchronized queue
 Parameter: NA
 Return value: int
  */
-int SyncQueue :: GetCount(){
+int SyncQueue::GetCount() {
 	int CountSize = 0;
 	CountSize=Queue.size();
 	return CountSize;
@@ -60,6 +60,6 @@ Description: This function returns the total number of file processed by synchor
 Parameter: NA
 Return value: int
  */
-int SyncQueue :: GetFileCount(){
+int SyncQueue::GetFileCount() {
 	return CountFileSize;
 }

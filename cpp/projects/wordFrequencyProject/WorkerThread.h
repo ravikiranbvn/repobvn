@@ -9,7 +9,7 @@
 
 class WorkerThread{
     public :
-        WorkerThread(int WThCount);
+        WorkerThread(int WThCount, SyncQueue& Qobject);
         ~WorkerThread();
         
         /*creates three thread*/
@@ -19,13 +19,13 @@ class WorkerThread{
         void FillMTable();
         
         /*return MTable*/
-        multimap<int,string,greater<int>> getTableEntry(); /* To get sorted table */
+        std::multimap<int, std::string, std::greater<int>> getTableEntry(); /* To get sorted table */
 
     private:        
-        void AddWordtoMTable(string);
-        map<string,int> MTable;
-        mutex WorkThMutexobj;
+        void AddWordtoMTable(std::string);
+        std::map<std::string,int> MTable;
+        std::mutex WorkThMutexobj;
         int WorkThreadCount;
-        std::thread t[3];
+        std::vector<std::thread> thCollect;
+        SyncQueue& mQobject;
 };
-#endif /* WORKERTHREAD_H */

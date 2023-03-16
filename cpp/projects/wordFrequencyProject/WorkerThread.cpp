@@ -6,13 +6,17 @@
 
 using namespace std;
 
-//to access queue
-extern SyncQueue Qobject;
-
-WorkerThread :: WorkerThread(int WThCount):WorkThreadCount(WThCount){
+WorkerThread::WorkerThread(int WThCount, SyncQueue& Qobject):
+              WorkThreadCount(WThCount),
+              mQobject(Qobject) {
 }
 
-WorkerThread :: ~WorkerThread(){
+WorkerThread::~WorkerThread(){
+ for(auto& t: thCollect) {
+    if(t.joinable()) {
+      t.join();
+    }
+  }
 }
 
 /*
@@ -21,13 +25,17 @@ Description: This function creates three worker thread
 Parameter: NA
 Return Value: NA
 */
-void WorkerThread :: CreateThreeWorkerThread(){
-   
+void WorkerThread::CreateThreeWorkerThread() {
    /* Create three threads */
-   for(int i =0;i<WorkThreadCount;i++){
-      t[i] = std::thread(&WorkerThread::FillMTable,this);
-      t[i].detach();
-     }
+   for(int i=0; i< WorkThreadCount; i++) {
+      thCollect.push_back(std::thread(&WorkerThread::FillMTable, this));
+   }
+     
+  for(auto& t: thCollect) {
+    if(t.joinable()) {
+      t.join();
+    }
+  }
 }
 
 /*
@@ -36,9 +44,8 @@ Description: This function adds words to MTable
 Parameter: string str    word read from file
 Return Value: NA
 */
-void WorkerThread :: AddWordtoMTable(std:: string str){
-
-    WorkThMutexobj.lock();
+void WorkerThread::AddWordtoMTable(std::string str) {
+    std::unique_lock<std::mutex> lock(WorkThMutexobj);
     map<string, int>::iterator it = MTable.find(str);
     if (it != MTable.end())
     {
@@ -48,7 +55,6 @@ void WorkerThread :: AddWordtoMTable(std:: string str){
     else{
         MTable.insert(std::make_pair(str, 1));
     } 
-    WorkThMutexobj.unlock();
 }
 
 /*
@@ -57,9 +63,8 @@ Description: This function reads the file and calls AddWordtoMTable() function
 Parameter: NA
 Return Value: NA
 */
-void  WorkerThread :: FillMTable(){
-   while(1){
-       string filename= Qobject.GetFilefrmQ();
+void  WorkerThread::FillMTable() {
+       string filename= mQobject.GetFilefrmQ();
        if(!filename.empty()){
            ifstream  file;
            string line;
@@ -85,7 +90,6 @@ void  WorkerThread :: FillMTable(){
                cout << "-Unable to open file-" << endl;
            }
      }
-   }
 }
 
 
@@ -95,7 +99,7 @@ Description: This function returns the MTable
 Parameter: NA
 Return value: multimap<int,string,greater<int>> a sorted multimap
 */
-multimap<int,string,greater<int>> WorkerThread:: getTableEntry(){   
+multimap<int,string,greater<int>> WorkerThread::getTableEntry(){   
    std::multimap<int,string,greater<int>> mmtbl;
    std::map<string,int>::iterator iter;
          for(iter=MTable.begin(); iter!=MTable.end(); ++iter){
