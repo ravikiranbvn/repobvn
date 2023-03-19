@@ -51,4 +51,11 @@ ex: s1[1] = 'e' -> its valid
 char *s2 = "abcde""; its not possible to modify them as C standard define them as read only and we dont know where they are allocated.
 but access is possible, if we increment or decrement the pointer (s2++ or s2--)
 
+// summary on consts                     Pointer         Value
+
+Non-const pointer to non-nonst:         muttable         muttable
+Non-const pointer to const:             muttable         immutable
+Const pointer to non-const:             immuttable       muttable
+Const pointer to const:                 immuttable       immuttable
+
 
