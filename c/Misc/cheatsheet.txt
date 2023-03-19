@@ -14,3 +14,34 @@
 unsigned numbers:
 shift left by 1 -> multiplication by 2 (mul by (2 power n))
 shift right by 1 -> integer division by 2 (div by (2 power n))
+
+key points on char* and char[] in C:
+
+char s[]="car";
+then decided to change it to
+s =
+"abcdefghijklmnopqrstuvwxyz123456789134566778889abcdefghijklmnopqrstuvwxyz"  ;
+The compiler would have to find a  large amount of memory for this new change  in size.
+And there might not be enough memory for this new  sudden change in size.   Therefore  a array's 
+starting address being fixed is a good safeguard.  
+   Therefore the base address of any
+array in C  is fixed, it is a constant.  
+   This applys to all arrays in  C , for example:  
+int a[]={1,2,3};
+int b[={4,5,6};
+you can't do this
+a= b;       ////// same as a= &b[0] ;
+// because you are changing the starting or base address of the integer array called a .  The address of a is fixed, and will remain fixed for the entire program.
+     But I can do this ,  
+int *p = a;  /////  int *p =&a[0];
+then later I can change the int pointer to point to array b
+p = b;     //////   because  p is a 
+pointer variable that can  point to any variable or  any array as long as it has the same data type , as the variable or array , that it is pointing,  or  refering to.    Pointer variables  can point to any variable of the same type.  Again as I said earlier ,  char arrays or C-strings are  character arrays only  , there is no such thing as a string in C ,  they are not  String objects like Java ,  or String objects like C++ or C#  .
+
+char s1[] = "abcde"; its possible to modify as they are allocated on stack memory 
+ex: s1[1] = 'e' -> its valid
+
+char *s2 = "abcde""; its not possible to modify them as C standard define them as read only and we dont know where they are allocated.
+but access is possible, if we increment or decrement the pointer (s2++ or s2--)
+
+
