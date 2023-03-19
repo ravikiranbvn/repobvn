@@ -22,6 +22,7 @@ shift right by 1 -> integer division by 2 (div by (2 power n))
 
 //
 key points on char* and char[] in C:
+// https://www.youtube.com/watch?v=Qp3WatLL_Hc&ab_channel=PortfolioCourses
 
 char s[]="car";
 then decided to change it to
