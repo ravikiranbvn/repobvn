@@ -3,18 +3,24 @@
 // To get maximum without if/else
 - maxi(x,y) -> return ((x+y) + abs(x-y))/2;
 
+//
 - Bit position 0 if 1 -> number is odd; 0-> number is even
 
+//
 - Lower order n bits are 0 -> divisibe by 2 power n 
 
+//
 - 1 in bit position n, 0 every where else, so number is 2 power n
 
+//
 - Bits n-1,...0 are 1, all other bits are 0 -> num = (2 power n) - 1
 
+//
 unsigned numbers:
 shift left by 1 -> multiplication by 2 (mul by (2 power n))
 shift right by 1 -> integer division by 2 (div by (2 power n))
 
+//
 key points on char* and char[] in C:
 
 char s[]="car";
