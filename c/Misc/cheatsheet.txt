@@ -59,3 +59,12 @@ Const pointer to non-const:             immuttable       muttable
 Const pointer to const:                 immuttable       immuttable
 
 
+// count set bits 
+int N = 10;
+int count = 0;
+while(N)
+{
+  N = N & (N-1)
+  count++;
+}
+
