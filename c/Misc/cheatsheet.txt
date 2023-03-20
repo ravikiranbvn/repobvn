@@ -68,3 +68,30 @@ while(N)
   count++;
 }
 
+// swap nibbles (11110011) -> (0011), (1111)
+unsigned char x;
+((0x0F & x) <<4 | (0xF0 & x) << 4)
+
+// set Kth bit in N -> (1 << K | N)
+
+// reverse uint32_t bits 
+#include <stdio.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+int main()
+{
+    uint32_t result = 0;
+    uint32_t n = 4294967293;
+    
+    for(int i=0; i < 32; i++)
+    {
+        result <<= 1;
+        result |= n & 1;
+        n >>= 1;
+    }
+    
+    printf("%lu",  (unsigned long)result);
+    
+    return 0;
+}
