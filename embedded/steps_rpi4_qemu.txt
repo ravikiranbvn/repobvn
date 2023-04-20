@@ -1,0 +1,13 @@
+1. https://raspberrypi.stackexchange.com/questions/138548/unable-to-login-in-qemu-raspberry-pi-3b
+2. https://hechao.li/2021/12/20/Boot-Raspberry-Pi-4-Using-uboot-and-Initramfs/
+3. https://www.orientdisplay.com/emulating-embedded-linux-systems-with-qemu/
+4. https://azeria-labs.com/emulate-raspberry-pi-with-qemu/
+5. https://gist.github.com/luk6xff/9f8d2520530a823944355e59343eadc1
+
+rpistart.sh
+
+sudo qemu-system-aarch64 -m 1024 -M raspi4b -kernel ~/qemu/boot/kernel8.img \
+  -dtb ~/qemu/boot/bcm2710-rpi-3-b-plus.dtb -sd ~/qemu/2022-04-04-raspios-bullseye-arm64-lite.qcow2 \
+  -append "console=ttyAMA0 root=/dev/mmcblk0p2 rw rootwait rootfstype=ext4" \
+  -nographic -device usb-net,netdev=net0 \
+  -netdev user,id=net0,hostfwd=tcp::5555-:22
