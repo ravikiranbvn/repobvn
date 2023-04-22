@@ -1,6 +1,7 @@
 https://hechao.li/2021/12/20/Boot-Raspberry-Pi-4-Using-uboot-and-Initramfs/
 
-- Follow the above guide, with below tool versions (Boot with a permanent rootfs directly)
+- Follow the above guide, with below tool versions working with 
+  (Boot with a initramfs/Boot with a permanent rootfs directly)
 1. crosstool-ng
  -- git clone https://github.com/crosstool-ng/crosstool-ng
  -- version (crosstool-NG 1.25.0.162_c116c9a) 2.40
