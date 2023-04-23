@@ -8,11 +8,13 @@
 - 🎓 Masters graduate in Electronics Engineering (Microsystems) from HS Bremen, Germany
 
 ## 📅 Hobbies
-- Hobby projects on Linux From Scratch (LFS), Rpi4 baremetal/custom embedded linux development using C/C++/Python
+- Hobby projects: 
+   - Linux From Scratch (LFS) 📚 (https://www.linuxfromscratch.org/)
+   - Rpi4 baremetal/custom embedded linux development using C/C++/Python
+  
 - Reading books on interpesonal skills and human psychology
-- 📚 (https://www.linuxfromscratch.org/)
-- 📚  (https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555)
-- 📚  (https://www.amazon.de/-/en/Mikael-Krogerus/dp/0241982286)
+    - 📚  (https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555)
+    - 📚  (https://www.amazon.de/-/en/Mikael-Krogerus/dp/0241982286)
 
 ## Explore
 - 💻 Building stuff from scratch
