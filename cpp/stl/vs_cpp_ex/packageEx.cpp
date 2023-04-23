@@ -3,10 +3,9 @@
 #include <optional>
 #include <string_view>
 #include <string>
-#include <fmt/core.h> // replace with <format> in C++20
+#include <format>
 
 using namespace std;
-using namespace fmt;
 
 struct Data {
     int i { 0 };
@@ -76,21 +75,21 @@ private:
 
 int main() {
     Package box {"Box", 10.0};
-    std::cout << fmt::format("{} {}\n", box.getMass(), box.getName());
+    std::cout << std::format("{} {}\n", box.getMass(), box.getName());
 
     Package tv {"TV", 200.0};
-    std::cout << fmt::format("{} {}\n", tv.getMass(), tv.getName());
+    std::cout << std::format("{} {}\n", tv.getMass(), tv.getName());
 
     std::cout << "copy constructor tv \n";
     Package dupTv {tv};
-    std::cout << fmt::format("{} {}\n", dupTv.getMass(), dupTv.getName());
+    std::cout << std::format("{} {}\n", dupTv.getMass(), dupTv.getName());
     
     std::cout << "move constructor tv \n";
     Package movTv {std::move(tv)};
-    std::cout << fmt::format("{} {}\n", movTv.getMass(), movTv.getName());
+    std::cout << std::format("{} {}\n", movTv.getMass(), movTv.getName());
     
     std::cout << "after moving tv -> movTv \n";
-    std::cout << fmt::format("{} {}\n", tv.getMass(), tv.getName());
+    std::cout << std::format("{} {}\n", tv.getMass(), tv.getName());
 
     return 0;                                        
 }

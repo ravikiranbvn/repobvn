@@ -1,12 +1,13 @@
-#include "iostream"
-#include "thread"
-#include "mutex"
-#include "condition_variable"
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <atomic>
 using namespace std;
 
 std::mutex mu;
 std::condition_variable cond;
-int count = 1;
+std::atomic<int> count{1};
 
 void PrintOdd()
 {
