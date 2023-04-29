@@ -7,39 +7,39 @@ using namespace std;
 
 std::mutex mu;
 std::condition_variable cond;
-std::atomic<int> count{1};
+int count = 0;
 
-void PrintOdd()
+void printOdd()
 {
-    for( ; ; )
+    for(; count < 100;)
     {
-    std::unique_lock<std::mutex> locker(mu);
-    cond.wait(locker,[](){ return (count%2 == 1); });
-    cout<< "From Odd:    " <<  count << endl;
-    count++;
-    locker.unlock();
-    cond.notify_all();
+        std::unique_lock<std::mutex> locker(mu); 
+        cond.wait(locker, [&] () -> int { return count;});
+        cout<< "From Odd:    " <<  count << endl;
+        count++;
+        locker.unlock();
+        cond.notify_one();
     }
-
 }
 
-void PrintEven()
+void printEven()
 {
-    for( ; ; )
+    for(; count < 100;)
     {
-    std::unique_lock<std::mutex> locker(mu);
-    cond.wait(locker,[](){return (count%2 == 0);});
-    cout<< "From Even: " << count << endl;
-    count++;
-    locker.unlock();
-    cond.notify_all();
+        std::unique_lock<std::mutex> locker(mu);
+        cond.wait(locker,  [&] () -> int { return count;});
+        cout<< "From Even: " << count << endl;
+        count++;
+        locker.unlock();
+        cond.notify_one();
     }
 }
 
 int main()
 {
-    std::thread t1(PrintOdd);
-    std::thread t2(PrintEven);
+    std::thread t1(printOdd);
+    std::thread t2(printEven);
+    
     t1.join();
     t2.join();
     return 0;

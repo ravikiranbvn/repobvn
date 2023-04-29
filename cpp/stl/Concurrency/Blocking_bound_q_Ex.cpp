@@ -15,6 +15,10 @@ public:
         max_size(max_size)
     {}
 
+    ~blocking_bounded_queue(){
+        take_var.notify_all();
+    }
+
     bool add(T const& e) {
         std::unique_lock<std::mutex> lg(mutex);
         

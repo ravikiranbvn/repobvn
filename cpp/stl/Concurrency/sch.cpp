@@ -60,6 +60,7 @@ void Task::run() {
 class Scheduler {
 public:
     Scheduler(size_t num): m_noAllTasks(num) {}
+    virtual ~Scheduler(){ m_cv.notify_all(); }
     
     void run(const std::function<void()> job, long n) {
         std::unique_lock<std::mutex> lock(m_mutex);

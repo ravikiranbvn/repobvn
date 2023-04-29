@@ -18,7 +18,7 @@ using namespace std;
 void saveToFile(vector<tuple<int, string, string, bool>> const & data){
 
 	ofstream myFile;
-	myFile.open("C:\\Users\\bulusur\\Desktop\\Muc++\\CHECK\\example.txt", std::ios_base::app);
+	myFile.open("filepath", std::ios_base::app);
 	if(myFile.is_open())
 	{
 		for (const auto &e : data)
@@ -41,7 +41,7 @@ void searchPattern(){
 	string name, filePath;
 	bool flag = false;
 
-	ifstream readFile("C:\\Users\\bulusur\\Desktop\\Muc++\\CHECK\\example.txt");
+	ifstream readFile("filepath");
 	if(readFile.is_open())
 	{
 		while(readFile >> id >>name>>filePath>>flag){

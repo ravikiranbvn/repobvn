@@ -3,7 +3,6 @@
 #include <optional>
 #include <string_view>
 #include <string>
-#include <format>
 
 using namespace std;
 
@@ -75,21 +74,21 @@ private:
 
 int main() {
     Package box {"Box", 10.0};
-    std::cout << std::format("{} {}\n", box.getMass(), box.getName());
+    std::cout << "mass=" << box.getMass() << "name=" <<  box.getName();
 
     Package tv {"TV", 200.0};
-    std::cout << std::format("{} {}\n", tv.getMass(), tv.getName());
+    std::cout << "mass=" << tv.getMass() <<  "name=" << tv.getName();
 
     std::cout << "copy constructor tv \n";
     Package dupTv {tv};
-    std::cout << std::format("{} {}\n", dupTv.getMass(), dupTv.getName());
+    std::cout << "mass=" << dupTv.getMass() << "name=" <<dupTv.getName();
     
     std::cout << "move constructor tv \n";
     Package movTv {std::move(tv)};
-    std::cout << std::format("{} {}\n", movTv.getMass(), movTv.getName());
+    std::cout << "mass=" << movTv.getMass() << "name=" << movTv.getName();
     
     std::cout << "after moving tv -> movTv \n";
-    std::cout << std::format("{} {}\n", tv.getMass(), tv.getName());
+    std::cout << "mass=" << tv.getMass() << "name=" << tv.getName();
 
     return 0;                                        
 }

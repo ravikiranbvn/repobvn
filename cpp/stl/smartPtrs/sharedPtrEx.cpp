@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 
-class Rectangle {
+class Rectangle : public std::enable_shared_from_this<Rectangle> {
 public:
     Rectangle(int w, int h) : width(w), height(h) {}
     ~Rectangle() { std::cout << "Rectangle destructor" << std::endl; }
