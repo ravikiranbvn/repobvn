@@ -17,6 +17,7 @@ add_executable( wfExe
                 WorkerThread.cpp
                 main.cpp )
 
+target_link_libraries(wfExe pthread)
+
 # how to link to a library (OpenCV as example)
-# target_link_libraries( cpp-callback ${OpenCV_LIBS} )
 #target_link_libraries(packageEx PRIVATE fmt::fmt-header-only) 

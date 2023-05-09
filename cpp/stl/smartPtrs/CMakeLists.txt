@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
-# use c++ 11
-set(CMAKE_CXX_STANDARD 20)
+# use c++ 17
+set(CMAKE_CXX_STANDARD 17)
 
 # set project name
 project( smart_ptr_ex )
