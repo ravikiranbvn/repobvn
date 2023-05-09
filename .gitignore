@@ -1,3 +1,4 @@
-cpp17/stl/vs_cpp_ex/build/
-cpp17/stl/smartPtrs/build/
-cpp17/Concurrency/build/
+cpp/stl/vs_cpp_ex/build/**
+cpp/stl/smartPtrs/build/**
+cpp/Concurrency/build/**
+cpp/projects/wordFrequency/build/**
