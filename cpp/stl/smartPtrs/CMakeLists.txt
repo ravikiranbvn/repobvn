@@ -12,3 +12,6 @@ project( smart_ptr_ex )
 # source files to compile
 add_executable( uniquePtrEx
                 uniquePtrEx.cpp )
+
+add_executable( weakPtrEx
+                weakPtrEx.cpp )
