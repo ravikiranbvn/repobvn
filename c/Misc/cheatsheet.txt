@@ -35,7 +35,7 @@ starting address being fixed is a good safeguard.
 array in C  is fixed, it is a constant.  
    This applys to all arrays in  C , for example:  
 int a[]={1,2,3};
-int b[={4,5,6};
+int b[]={4,5,6};
 you can't do this
 a= b;       ////// same as a= &b[0] ;
 // because you are changing the starting or base address of the integer array called a .  The address of a is fixed, and will remain fixed for the entire program.
