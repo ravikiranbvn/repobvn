@@ -1,0 +1,14 @@
+Patching files using git 
+1. example git: https://github.com/Xilinx/embeddedsw/tree/master
+
+2. git clone https://github.com/Xilinx/embeddedsw/tree/master
+
+3. git checkout master-rel-2020.2
+
+4. lets suppose file xrfdc.h has to be patched
+  --> then copy xrfdc_h_modified.h (with necessary changes) to location XilinxProcessorIPLib/drivers/rfdc/src
+
+5. the do a git diff with a commit id/branch
+   Ex: git diff 08b9f43:./xrfdc_h.h xrfdc_h_modified.h > exChanges.patch
+
+6. exChanges.patch is the patch file to add in yocto projects under files section
