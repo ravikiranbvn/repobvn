@@ -1,2 +1,2 @@
 - Code experiments with C/C++17/Python
-- I blog(https://ravikiranbvn.github.io/) here.
+- [blog](https://ravikiranbvn.github.io/)
