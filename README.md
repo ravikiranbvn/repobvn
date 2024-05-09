@@ -32,3 +32,4 @@
 ## Follower
 - CppCon (https://cppcon.org/)
 - ISO Cpp (https://isocpp.org/)
+  [personal blog](https://ravikiranbvn.github.io/about_me/)
